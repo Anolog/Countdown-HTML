@@ -1,7 +1,9 @@
 let countdown;
+let totalSeconds = 0;
 let countdownDisplay = document.getElementById('countdown');
 
 function parseTimeInput(timeStr) {
+    if (!timeStr) return 0;
     const timeParts = timeStr.split(/[: ]+/);
     let seconds = 0;
     timeParts.forEach(part => {
@@ -14,10 +16,16 @@ function parseTimeInput(timeStr) {
     return seconds;
 }
 
+function updateTimerDisplay() {
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+    countdownDisplay.innerText = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
+
 function startTimer() {
     clearInterval(countdown);
-    const timeInput = document.getElementById('timeInput').value;
-    let totalSeconds = parseTimeInput(timeInput);
+    totalSeconds = parseTimeInput(document.getElementById('timeInput').value);
 
     countdown = setInterval(() => {
         if (totalSeconds <= 0) {
@@ -26,10 +34,7 @@ function startTimer() {
             return;
         }
         totalSeconds--;
-        const hours = Math.floor(totalSeconds / 3600);
-        const minutes = Math.floor((totalSeconds % 3600) / 60);
-        const seconds = totalSeconds % 60;
-        countdownDisplay.innerText = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        updateTimerDisplay();
     }, 1000);
 }
 
@@ -39,15 +44,14 @@ function stopTimer() {
 
 function resetTimer() {
     clearInterval(countdown);
-    countdownDisplay.innerText = '00:00:00';
+    totalSeconds = 0;
+    updateTimerDisplay();
 }
 
 function decreaseTimer() {
-    const decreaseInput = document.getElementById('decreaseTimeInput').value;
-    let decreaseSeconds = parseTimeInput(decreaseInput);
-    let currentSeconds = parseTimeInput(countdownDisplay.innerText);
-    currentSeconds = Math.max(currentSeconds - decreaseSeconds, 0);
-    countdownDisplay.innerText = `${Math.floor(currentSeconds / 3600).toString().padStart(2, '0')}:${Math.floor((currentSeconds % 3600) / 60).toString().padStart(2, '0')}:${(currentSeconds % 60).toString().padStart(2, '0')}`;
+    const decreaseSeconds = parseTimeInput(document.getElementById('decreaseTimeInput').value);
+    totalSeconds = Math.max(totalSeconds - decreaseSeconds, 0);
+    updateTimerDisplay();
 }
 
 document.getElementById('timeInput').addEventListener('keyup', function(event) {
