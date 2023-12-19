@@ -48,6 +48,12 @@ function resetTimer() {
     updateTimerDisplay();
 }
 
+function increaseTimer() {
+    const increaseSeconds = parseTimeInput(document.getElementById('increaseTimeInput').value);
+    totalSeconds += increaseSeconds;
+    updateTimerDisplay();
+}
+
 function decreaseTimer() {
     const decreaseSeconds = parseTimeInput(document.getElementById('decreaseTimeInput').value);
     totalSeconds = Math.max(totalSeconds - decreaseSeconds, 0);
