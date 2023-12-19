@@ -7,12 +7,20 @@
 <body>
     <div id="timer">
         <h1 id="countdown">00:00:00</h1>
-        <input type="text" id="timeInput" placeholder="1h 30m 20s">
+        <input type="text" id="timeInput" placeholder="10h 10m 10s">
         <button onclick="startTimer()">Start</button>
         <button onclick="stopTimer()">Stop</button>
         <button onclick="resetTimer()">Reset</button>
-        <input type="text" id="decreaseTimeInput" placeholder="Decrease Time (2m 30s)">
-        <button onclick="decreaseTimer()">Decrease</button>
+
+        <div>
+            <input type="text" id="decreaseTimeInput" placeholder="Decrease Time (e.g., 1h 30m 20s)">
+            <button onclick="decreaseTimer()">Decrease</button>
+        </div>
+
+        <div>
+            <input type="text" id="increaseTimeInput" placeholder="Increase Time (e.g., 1h 30m 20s)">
+            <button onclick="increaseTimer()">Increase</button>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
